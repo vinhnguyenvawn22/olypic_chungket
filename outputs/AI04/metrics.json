@@ -1,0 +1,51 @@
+{
+  "accuracy": 0.9771106941838649,
+  "macro_f1": 0.9755465933929397,
+  "false_empty_rate_among_occupied": 0.00720164609053498,
+  "recall_occupied": 0.992798353909465,
+  "classification_report": {
+    "0": {
+      "precision": 0.9957472660996355,
+      "recall": 0.9681039574719433,
+      "f1-score": 0.9817310572027553,
+      "support": 1693.0
+    },
+    "1": {
+      "precision": 0.9470068694798822,
+      "recall": 0.992798353909465,
+      "f1-score": 0.9693621295831241,
+      "support": 972.0
+    },
+    "accuracy": 0.9771106941838649,
+    "macro avg": {
+      "precision": 0.9713770677897589,
+      "recall": 0.9804511556907042,
+      "f1-score": 0.9755465933929397,
+      "support": 2665.0
+    },
+    "weighted avg": {
+      "precision": 0.9779702809159956,
+      "recall": 0.9771106941838649,
+      "f1-score": 0.9772197635268522,
+      "support": 2665.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      1639,
+      54
+    ],
+    [
+      7,
+      965
+    ]
+  ],
+  "features": [
+    "Temperature",
+    "Humidity",
+    "Light",
+    "CO2",
+    "HumidityRatio"
+  ],
+  "split": "official datatraining -> datatest; datatest2 reserved BTC"
+}

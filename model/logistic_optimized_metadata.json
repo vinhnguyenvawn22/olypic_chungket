@@ -1,0 +1,29 @@
+{
+    "model_name": "LR | poly=1 | C=0.3 | cw=balanced",
+    "algorithm": "Logistic Regression",
+    "training_dataset": "datatraining.txt",
+    "training_samples": 8143,
+    "features": [
+        "Temperature",
+        "Humidity",
+        "Light",
+        "CO2",
+        "HumidityRatio"
+    ],
+    "target": "Occupancy",
+    "random_seed": 2026,
+    "selection_protocol": "Grouped 2-hour CV + Chronological Robustness",
+    "grouped_cv_macro_f1": 0.9699043047979856,
+    "grouped_cv_false_empty_rate": 0.022556390977443608,
+    "temporal_cv_macro_f1": 0.9919696014774073,
+    "temporal_cv_false_empty_rate": 0.0017035775127768314,
+    "training_seconds": 0.032363700098358095,
+    "model_path": "model\\logistic_optimized.joblib",
+    "sklearn_version": "1.6.1",
+    "original_model_name": "LR | poly=1 | C=0.3 | cw=balanced",
+    "polynomial_degree": 2,
+    "configuration_source": "Verified saved pipeline parameters and notebook candidate construction. Original research name, model and evaluation metrics preserved.",
+    "display_model_name": "LR | polynomial_degree=2 | C=0.3 | cw=balanced",
+    "polynomial_enabled": true,
+    "polynomial_flag_semantics": "poly=1 is int(use_poly): enable PolynomialFeatures(degree=2), not degree=1. Source: src/01_EDA.ipynb, CELL 17 (cell index 29)."
+}

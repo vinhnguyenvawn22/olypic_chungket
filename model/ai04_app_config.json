@@ -1,0 +1,36 @@
+{
+    "project": "UNETI 2026 - AI04",
+    "team": "UNETI15",
+    "model_name": "LR | poly=1 | C=0.3 | cw=balanced",
+    "model_path": "model/logistic_optimized.joblib",
+    "baseline_model_path": "outputs/AI04/model.joblib",
+    "features": [
+        "Temperature",
+        "Humidity",
+        "Light",
+        "CO2",
+        "HumidityRatio"
+    ],
+    "target": "Occupancy",
+    "occupied_label": 1,
+    "empty_label": 0,
+    "alert": {
+        "threshold": 0.2,
+        "consecutive_samples": 3,
+        "max_gap_seconds": 120,
+        "advisory_only": true
+    },
+    "notes": [
+        "No automatic electricity control",
+        "Reset streak on invalid or interrupted timestamps",
+        "UCI office data; classroom deployment not validated",
+        "Validation data was previously examined during research",
+        "Reserved datatest2.txt not used"
+    ],
+    "original_model_name": "LR | poly=1 | C=0.3 | cw=balanced",
+    "polynomial_degree": 2,
+    "configuration_source": "Verified saved pipeline parameters and notebook candidate construction. Original research name, model and evaluation metrics preserved.",
+    "display_model_name": "LR | polynomial_degree=2 | C=0.3 | cw=balanced",
+    "polynomial_enabled": true,
+    "polynomial_flag_semantics": "poly=1 is int(use_poly): enable PolynomialFeatures(degree=2), not degree=1. Source: src/01_EDA.ipynb, CELL 17 (cell index 29)."
+}

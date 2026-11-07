@@ -1,0 +1,47 @@
+.onboarding{position:absolute;inset:0;z-index:110;pointer-events:none}
+.guide-blocker{position:absolute;inset:0;pointer-events:auto;touch-action:none}
+.guide-dim{position:absolute;inset:0;background:#0d271f99}
+.guide-spotlight{position:fixed;border:3px solid #d0e9aa;border-radius:13px;box-shadow:0 0 0 9999px #0d271f99;pointer-events:none;transition:none}
+.guide-card{position:absolute;left:28px;top:205px;width:min(430px,calc(100% - 48px));max-height:calc(var(--visible-height,100dvh) - 230px);overflow:auto;background:#fffef9;border:1px solid #d2dfc9;border-radius:22px;padding:22px;box-shadow:0 18px 70px #0b241f4d;color:#173c30;pointer-events:auto;font-size:16px;line-height:1.65}
+.guide-welcome .guide-card{left:50%;top:50%;transform:translate(-50%,-50%);width:min(500px,calc(100% - 32px));max-height:calc(var(--visible-height,100dvh) - 32px);padding:28px}
+.guide-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.guide-card-top>span{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#425c50}
+.guide-card .icon-btn{width:40px;min-width:40px;height:40px;color:#315645}
+.guide-card h2{font-size:24px;line-height:1.4;letter-spacing:-.5px;margin:13px 0;color:#173c30}
+.guide-description p{font-size:16px;line-height:1.7;color:#425c50;margin:0}
+.guide-card :is(.primary,.secondary,.text-btn){font-size:16px;min-height:44px}
+.guide-card .primary{min-height:48px}
+.guide-copy{margin-top:12px;width:100%;white-space:normal}
+.guide-welcome-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.guide-welcome-actions>button{flex:1;white-space:nowrap}
+.guide-progress{display:flex;gap:6px;margin:20px 0 12px}
+.guide-progress>span{height:5px;flex:1;border-radius:5px;background:#dbe4d3}
+.guide-progress>span.filled{background:#315e47}
+.guide-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #dce6d5;padding-top:12px}
+.guide-actions>div{display:flex;gap:8px}
+.guide-actions .secondary,.guide-actions .primary{padding:10px 12px;gap:5px;white-space:normal}
+.is-guiding .skip-intro{display:none}
+.presentation-mode .guide-description p,.presentation-mode .guide-card :is(.primary,.secondary,.text-btn){font-size:18px}
+@media(min-width:1100px){.is-guiding .quick-sensors.expanded{max-height:calc(var(--visible-height,100dvh) - 580px);min-height:225px}.guide-walkthrough .guide-card{top:165px}}
+@media(min-width:1100px) and (max-height:850px){.app .is-guiding .quick-sensors.expanded{left:auto;right:24px;transform:none;width:calc(100% - 510px);max-height:calc(var(--visible-height,100dvh) - 240px);min-height:0}}
+@media(max-width:1099px){
+  .guide-walkthrough .guide-card{left:12px;right:12px;top:12px;width:auto;max-height:calc(var(--visible-height,100dvh)*.52);padding:15px 18px;border-radius:18px}
+  .guide-walkthrough .guide-card h2{font-size:22px;margin:7px 0}
+  .guide-description p{font-size:16px;line-height:1.6}
+  .guide-card-top>span{font-size:13px}
+  .guide-progress{margin:12px 0 9px}
+  .guide-actions{padding-top:9px;gap:4px;flex-wrap:wrap}
+  .guide-actions>div{margin-left:auto}
+  .guide-actions :is(.secondary,.primary){font-size:14px;padding:8px 10px}
+  .app .is-guiding .lab-dock,.app .is-guiding .hud-timeline{visibility:hidden}
+  .app .is-guiding .floating-panel,.app .is-guiding .floating-panel.analysis-drawer,.app .is-guiding .quick-sensors.expanded{top:calc(var(--guide-height,310px) + 26px);bottom:12px;height:auto;max-height:none}
+  .app .is-guiding .hud-insights{top:calc(var(--guide-height,310px) + 35px);visibility:visible}
+  .app .is-guiding .floating-panel{top:calc(var(--guide-height,310px) + 220px)}
+  .app .is-guiding .quick-footer>div{display:none}
+  .app .is-guiding .quick-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .app .is-guiding .quick-field:last-child{grid-column:1/-1}
+  .app .is-guiding .quick-heading{flex-shrink:0}
+  .guide-welcome .guide-card{padding:22px}
+}
+@media(max-width:380px){.guide-card-top>span{font-size:12px}.guide-actions .secondary svg{display:none}.guide-actions{gap:3px}.guide-card h2{font-size:21px}}
+@media(max-height:650px){.guide-card{top:14px;max-height:calc(var(--visible-height,100dvh) - 28px)}.guide-walkthrough .guide-card{max-height:calc(var(--visible-height,100dvh)*.5);padding:10px 14px}.guide-walkthrough .guide-card h2{font-size:20px;margin:5px 0}.guide-card-top .icon-btn{height:32px}.guide-description p{font-size:14px;line-height:1.5}.guide-progress{margin:8px 0}.guide-actions{padding-top:6px}.app .is-guiding .floating-panel{top:calc(var(--guide-height,260px) + 32px)}.app .is-guiding .hud-insights{visibility:hidden}.app .is-guiding .quick-sensors.expanded{top:calc(var(--guide-height,260px) + 24px)}.is-guiding .quick-sensors.expanded{min-height:0}}

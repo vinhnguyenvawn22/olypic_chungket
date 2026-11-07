@@ -1,0 +1,11 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './style.css';
+import './experience.css';
+import './fullscreen.css';
+import './quick-input.css';
+import './energy.css';
+import './readability.css';
+import './onboarding.css';
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

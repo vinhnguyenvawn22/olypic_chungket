@@ -72,4 +72,8 @@ python -m pytest backend/test_api.py -q
 Khuyến nghị xuất hiện khi **P(có người) <20% trong ít nhất ba mẫu liên tiếp**; chuỗi bắt đầu lại nếu thời gian không tăng hoặc gián đoạn >120 giây. Người dùng cần kiểm tra thực tế trước khi xử lý thiết bị. Đây là nguyên mẫu dùng dữ liệu phòng làm việc, chưa được xác thực tại lớp học UNETI; chưa điều khiển điện hay đo mức tiết kiệm kWh.
 
 Nguồn kế thừa: [UCI Occupancy Detection](https://archive.ics.uci.edu/dataset/357/occupancy+detection), **baseline BTC** và các thư viện trong requirements/lockfile. Phần đội thực hiện: cải tiến Logistic, so sánh thực nghiệm, phân tích lỗi, logic khuyến nghị và ứng dụng minh họa. Công cụ AI hỗ trợ lập trình, biên tập: **OpenAI Codex**.
+
+## Demo trực tuyến
+
+Danh sách tệp cần đưa lên GitHub và cách triển khai React + FastAPI trên Render: [DEPLOY_RENDER.md](DEPLOY_RENDER.md). Cấu hình dịch vụ nằm trong `render.yaml`; thư viện chạy demo được ghim tại `requirements-render.txt`.
 # olypic_chungket

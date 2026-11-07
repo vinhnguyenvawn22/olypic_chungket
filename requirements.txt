@@ -1,0 +1,9 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+python-multipart>=0.0.20,<1
+scikit-learn==1.6.1
+joblib>=1.4,<2
+pandas>=2.2,<3
+numpy>=1.26,<3
+pytest>=8,<10
+httpx>=0.27,<1
