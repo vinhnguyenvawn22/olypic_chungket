@@ -1,0 +1,221 @@
+{
+  "team": "UNETI15",
+  "task": "AI04",
+  "selected_original_name": "LR | poly=1 | C=0.3 | cw=balanced",
+  "selected_display_name": "LR | polynomial_degree=2 | C=0.3 | cw=balanced",
+  "seed": 2026,
+  "candidate_count": 16,
+  "train_samples": 8143,
+  "validation_samples": 2665,
+  "train_sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+  "validation_sha256": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f",
+  "validation_previously_examined": true,
+  "reserved_dataset_read": false,
+  "protected_artifacts_unchanged": true,
+  "protected_sha256": {
+    "outputs/AI04/model.joblib": "dbc2a9c1c07f4c83636455a3795c89c719f6967a70500cabaed3855fbd4ca56c",
+    "model/logistic_optimized.joblib": "d63a9b0a5ef8e411ea9021a45b6a48f377be5cf071bb346201913fe539441d38",
+    "outputs/AI04/metrics.json": "f61c10fa329a657069c60e25af3987daaf2f85a857528810792095efbe2e5c1d",
+    "model/logistic_optimized_metadata.json": "2feea3989fb11d5672e64a6a376c278e8f580cbdfab544de6d570d4e6edc7c48",
+    "model/ai04_app_config.json": "9fbc2d8017c747c5661d91a9e2167b837041fd0cbd3789227bea297072fc488f"
+  },
+  "classification": [
+    {
+      "model": "BTC Logistic Regression",
+      "samples": 2665,
+      "accuracy": 0.9771106941838649,
+      "macro_f1": 0.9755465933929397,
+      "recall_occupied": 0.992798353909465,
+      "false_empty_rate": 0.00720164609053498,
+      "TN": 1639,
+      "FP": 54,
+      "FN": 7,
+      "TP": 965
+    },
+    {
+      "model": "Optimized Logistic Regression",
+      "samples": 2665,
+      "accuracy": 0.9786116322701689,
+      "macro_f1": 0.9771777378038254,
+      "recall_occupied": 0.9979423868312757,
+      "false_empty_rate": 0.00205761316872428,
+      "TN": 1638,
+      "FP": 55,
+      "FN": 2,
+      "TP": 970
+    }
+  ],
+  "advisory": [
+    {
+      "model": "BTC Logistic + Original Alert",
+      "correct_alert_samples": 1633,
+      "unsafe_alert_samples": 1,
+      "unsafe_rate_among_occupied": 0.00102880658436214,
+      "empty_coverage": 0.9645599527466037,
+      "alert_precision": 0.9993880048959608,
+      "total_alert_episodes": 3,
+      "unsafe_alert_episodes": 1
+    },
+    {
+      "model": "Optimized Logistic + Original Alert",
+      "correct_alert_samples": 1631,
+      "unsafe_alert_samples": 1,
+      "unsafe_rate_among_occupied": 0.00102880658436214,
+      "empty_coverage": 0.9633786178381571,
+      "alert_precision": 0.9993872549019608,
+      "total_alert_episodes": 3,
+      "unsafe_alert_episodes": 1
+    },
+    {
+      "model": "Optimized Logistic + Gap Check",
+      "correct_alert_samples": 1631,
+      "unsafe_alert_samples": 1,
+      "unsafe_rate_among_occupied": 0.00102880658436214,
+      "empty_coverage": 0.9633786178381571,
+      "alert_precision": 0.9993872549019608,
+      "total_alert_episodes": 3,
+      "unsafe_alert_episodes": 1
+    }
+  ],
+  "python": "3.12.14",
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.6.1",
+    "matplotlib": "3.10.7",
+    "joblib": "1.4.2"
+  },
+  "scope": "Offline model and sequence research; no real power control or classroom validation.",
+  "selection": {
+    "selected_model": "LR | poly=1 | C=0.3 | cw=balanced",
+    "selection_source": "datatraining.txt only",
+    "primary_metric": "temporal_macro_f1",
+    "constraints": [
+      "grouped_f1 >= btc_grouped_f1",
+      "grouped_fer <= btc_grouped_fer",
+      "temporal_f1 >= btc_temporal_f1",
+      "temporal_fer <= btc_temporal_fer"
+    ],
+    "ranking": [
+      "temporal_f1 descending",
+      "temporal_fer ascending",
+      "grouped_f1 descending"
+    ],
+    "random_seed": 2026
+  },
+  "baseline_reproducibility": {
+    "source": "AI04/train.py",
+    "train_file": "data/AI04/datatraining.txt",
+    "train_sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+    "training_samples": 8143,
+    "feature_order": [
+      "Temperature",
+      "Humidity",
+      "Light",
+      "CO2",
+      "HumidityRatio"
+    ],
+    "artifact_sha256": "dbc2a9c1c07f4c83636455a3795c89c719f6967a70500cabaed3855fbd4ca56c",
+    "reproduced_training_probabilities_match": true,
+    "limitation": "Prediction agreement corroborates reproducibility, not an independent audit of historical training provenance."
+  },
+  "optimized_reproduction": {
+    "selected_model": "LR | poly=1 | C=0.3 | cw=balanced",
+    "published_model": "LR | poly=1 | C=0.3 | cw=balanced",
+    "max_absolute_train_probability_difference": 2.192690473634684e-12,
+    "class_weight_matches": true,
+    "C_matches": true,
+    "polynomial_degree_matches": true,
+    "research_model": "in_memory_reproduction",
+    "application_model": "model/logistic_optimized.joblib"
+  },
+  "validation_reproduction": {
+    "BTC": {
+      "max_absolute_probability_difference": 1.9984014443252818e-15,
+      "predictions_match": true
+    },
+    "UNETI15": {
+      "max_absolute_probability_difference": 4.970135414339438e-12,
+      "predictions_match": true
+    }
+  },
+  "reproduced_model_metadata": {
+    "model_name": "LR | poly=1 | C=0.3 | cw=balanced",
+    "display_model_name": "LR | polynomial_degree=2 | C=0.3 | cw=balanced",
+    "polynomial_enabled": true,
+    "polynomial_degree": 2,
+    "algorithm": "Logistic Regression",
+    "training_dataset": "datatraining.txt",
+    "training_samples": 8143,
+    "features": [
+      "Temperature",
+      "Humidity",
+      "Light",
+      "CO2",
+      "HumidityRatio"
+    ],
+    "target": "Occupancy",
+    "random_seed": 2026,
+    "selection_protocol": "Grouped 2-hour CV + Chronological Robustness",
+    "grouped_cv_macro_f1": 0.9699043047979856,
+    "grouped_cv_false_empty_rate": 0.022556390977443608,
+    "temporal_cv_macro_f1": 0.9919696014774073,
+    "temporal_cv_false_empty_rate": 0.0017035775127768314,
+    "model_storage": "in_memory_reproduction",
+    "sklearn_version": "1.6.1"
+  },
+  "figure_checks": {
+    "typography": {
+      "font": "DejaVu Sans"
+    },
+    "figures": [
+      {
+        "title": "01 · Phân bố trạng thái phòng",
+        "message": "Phòng trống chiếm 78,8%; đọc thêm Macro-F1 và lỗi bỏ sót có người.",
+        "png": "01_phan_bo_trang_thai_phong.png",
+        "png_sha256": "46f7b7cd09faaefcd5e554d2d5f88ad42844c797f8cc86b454355bab78d328b7"
+      },
+      {
+        "title": "02 · Phân bố độ rọi",
+        "message": "Hai lớp dùng chung biên histogram; hình giới hạn đến phân vị 99,5%, mô hình dùng dữ liệu gốc.",
+        "png": "02_phan_bo_anh_sang.png",
+        "png_sha256": "c39a58b2aa649f74f8cd00b4c8ca5d89411b0a95cc66b75d129430eb04c5b7e4"
+      },
+      {
+        "title": "03 · Phân bố nồng độ CO₂",
+        "message": "Hai lớp dùng chung biên histogram; hình giới hạn đến phân vị 99,5%, mô hình dùng dữ liệu gốc.",
+        "png": "03_phan_bo_nong_do_co2.png",
+        "png_sha256": "e85f660c5e06a1f6fa35f760165a55c12972157491b23242a1a1d2c6dac1c232"
+      },
+      {
+        "title": "07 · So sánh hai quy trình CV",
+        "message": "Mỗi hàng là một quy trình riêng; so sánh baseline và cải tiến trong cùng hàng, cùng các phần chia dữ liệu.",
+        "png": "07_so_sanh_hai_cach_kiem_tra_mo_hinh.png",
+        "png_sha256": "f1a6a8a97f5750eb7df6d4398cf4a034008576ff8d79aa60b8884d743a504457"
+      },
+      {
+        "title": "08 · Hai ma trận nhầm lẫn",
+        "message": "Lỗi có người → phòng trống: 7 → 2; lỗi ngược lại 54 → 55.",
+        "png": "08_ma_tran_nham_lan_hai_mo_hinh.png",
+        "png_sha256": "9d8f81d2133dcf5a3317ae92dc2b2d79752cd2318e3508d2daf6a91cd063f25f"
+      },
+      {
+        "title": "09 · Xác suất và khuyến nghị cả ngày",
+        "message": "Ngày 03/02/2015 có 1 mẫu khuyến nghị khi thực tế còn người; ngưỡng khuyến nghị khác quyết định phân loại.",
+        "png": "09_xac_suat_va_khuyen_nghi_theo_thoi_gian.png",
+        "png_sha256": "4e6be4e9c932c1185e51657936169a5743ae75c15891fa46796d9478b8140459"
+      },
+      {
+        "title": "11 · Phóng to quanh khuyến nghị sai",
+        "message": "Khoảng ±12 phút quanh 07:36:00 03/02/2015: đọc xác suất, nhãn thật và điều kiện khuyến nghị cùng thời điểm.",
+        "png": "11_phan_tich_mau_khuyen_nghi_sai.png",
+        "png_sha256": "0e118f9ff21b069443bc52ecb81095408c5dffe3e542ffe8e15b9d0a30b42dc4"
+      }
+    ]
+  },
+  "functional_checks": {
+    "controlled_scenarios": 6,
+    "controlled_steps": 18,
+    "validation_backend_parity": true
+  }
+}

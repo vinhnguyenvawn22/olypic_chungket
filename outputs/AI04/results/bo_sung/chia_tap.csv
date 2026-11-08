@@ -1,0 +1,9 @@
+scheme,fold,train_n,valid_n,occupied
+grouped,1,5387,2756,619
+grouped,2,5369,2774,645
+grouped,3,5530,2613,465
+forward,2015-02-06,1689,1440,586
+forward,2015-02-07,3129,1440,0
+forward,2015-02-08,4569,1440,0
+forward,2015-02-09,6009,1440,534
+forward,2015-02-10,7449,574,54

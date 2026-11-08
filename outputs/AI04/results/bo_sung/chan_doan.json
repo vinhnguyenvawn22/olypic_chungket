@@ -1,0 +1,26 @@
+{
+  "paired_block_bootstrap": {
+    "goc_minus_btc_pp": [
+      -0.1138595013276919,
+      0.5713894302788586
+    ],
+    "moi_minus_goc_pp": [
+      -0.19619524644594072,
+      0.08447268036177874
+    ]
+  },
+  "resampling": "1.000 bootstrap ghép cặp, khối tròn 60 dòng, seed 2026. Khoảng mô tả, validation đã từng xem.",
+  "new_corrected": 1,
+  "new_errors": 2,
+  "validation_previously_examined": true,
+  "unsafe_case_goc": [
+    {
+      "date": "2015-02-03 07:36:00",
+      "Light": 217.2,
+      "CO2": 441.6,
+      "goc_score": 0.1676169803886116,
+      "goc_streak": 812
+    }
+  ],
+  "validation_gaps_over_120": 0
+}

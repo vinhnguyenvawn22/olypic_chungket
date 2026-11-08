@@ -1,0 +1,26 @@
+{
+  "http_checks": [
+    "served HTML/CSS/JS",
+    "default or2 cancels the original812 failure over HTTP",
+    "full CSV HTTP and CLI use same inference guard",
+    "full CSV HTTP and CLI use same inference or2",
+    "full CSV HTTP and CLI use same inference ort",
+    "full CSV HTTP and CLI use same inference champion",
+    "missing data resets confirmation",
+    "missing schema gets HTTP400"
+  ],
+  "unittest": "5 passed",
+  "original_notebook": "37 code cells run in-process before focused extension",
+  "focused_notebook": "11 code cells run in-process; full train separately run",
+  "browser_interactive": false,
+  "browser_reason": "Chromium Unix socket permission blocked",
+  "kernel_reason": "ZMQ socket permission blocked",
+  "method": "Python3.12.14, sklearn1.6.1",
+  "original_file_hashes_verified": {
+    "model/logistic_optimized.joblib": "d63a9b0a5ef8e411ea9021a45b6a48f377be5cf071bb346201913fe539441d38",
+    "outputs/AI04/model.joblib": "dbc2a9c1c07f4c83636455a3795c89c719f6967a70500cabaed3855fbd4ca56c",
+    "data/AI04/datatraining.txt": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+    "data/AI04/datatest.txt": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f"
+  },
+  "extra_diagnostic": "Hạ ngưỡng0.025/0.05/0.1/0.15/0.2 được đối chiếu bổ sung sau khi xem kết quả phát triển. Các giá trị đã có trong protocol_bo_sung trước. Không thay đổi selection_locked hoặc mặc định OR2+delta."
+}

@@ -1,0 +1,19 @@
+{
+  "recipe": [
+    "poly2",
+    0.03,
+    "balanced"
+  ],
+  "name": "poly2, C=0.03, w=balanced",
+  "threshold": 0.55,
+  "low": 0.2,
+  "classification_fallback": false,
+  "advisory_fallback": false,
+  "criterion": "min Macro-F1 hai cách chia sau lọc FER/FPR",
+  "min_coverage": 0.9292635658914729,
+  "train_sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+  "protocol_sha256": "c5b7ecf17066d56462206b27190d4acab233219f03c8c24c88b322fcb3a95b08",
+  "source_sha256": "0ce9dc3463d73771135cc5b9d0ad68c9ca688ce184d5eceaf728525c84e9c463",
+  "training_rows": 8143,
+  "selection_source": "datatraining.txt"
+}

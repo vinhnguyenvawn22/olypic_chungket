@@ -1,0 +1,43 @@
+{
+  "folder": "UNETI15_NguoiHaTayChat_AI04",
+  "problem": "AI04",
+  "slide_pages": 15,
+  "required_files": {
+    "slides.pdf": true,
+    "README.md": true,
+    "requirements.txt": true,
+    "src/": true,
+    "results/": true,
+    "model/": true,
+    "SOURCES.md": true
+  },
+  "editable_slides": "slides.pptx",
+  "python": "3.12.14",
+  "sklearn": "1.6.1",
+  "checks_after_clean_extract": {
+    "regression_tests": 5,
+    "empty_csv": "passed",
+    "arrival_csv": "passed",
+    "baseline_training": "passed",
+    "focused_notebook_code_cells": 11
+  },
+  "slide_hashes": {
+    "slides.pdf": "5c47d5653dcd80e2e5f609e6874c27823e307ce21a73c5ae9d6848f5d4fff5d6",
+    "slides.pptx": "db6bfc7f042f270bd5525b048866eca0361765ab6ceaf56679607ae613edea11"
+  },
+  "offline_data_included": [
+    "data/AI04/datatraining.txt",
+    "data/AI04/datatest.txt",
+    "demo/empty.csv",
+    "demo/gap.csv",
+    "demo/missing.csv",
+    "demo/arrival.csv"
+  ],
+  "important_conditions": [
+    "Validation was previously observed during development.",
+    "New results and slides were prepared after the deadline stated in the exam.",
+    "Interactive browser and native PowerPoint tests were unavailable in the preparation environment."
+  ],
+  "selection_document": "PHUONG_PHAP_MO_HINH.md",
+  "selection_document_sha256": "11909077a58c938dae649843891fd4ef82321cef4b103152c9d33e265fd6dfa2"
+}

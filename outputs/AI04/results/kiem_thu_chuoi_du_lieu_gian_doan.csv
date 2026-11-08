@@ -1,0 +1,7 @@
+﻿scenario,timestamp,probability,btc_streak,improved_streak,btc_alert,improved_alert
+Continuous readings,2026-01-01 10:00:00,0.1,1,1,False,False
+Continuous readings,2026-01-01 10:01:00,0.08,2,2,False,False
+Continuous readings,2026-01-01 10:02:00,0.07,3,3,True,True
+Interrupted readings,2026-01-01 10:00:00,0.1,1,1,False,False
+Interrupted readings,2026-01-01 10:01:00,0.08,2,2,False,False
+Interrupted readings,2026-01-01 10:20:00,0.07,3,1,True,False

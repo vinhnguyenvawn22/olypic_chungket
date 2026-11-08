@@ -1,6 +1,7 @@
 param(
     [ValidateRange(1024, 65535)]
-    [int]$Port = 8000
+    [int]$Port = 8000,
+    [switch]$Rebuild
 )
 
 $ErrorActionPreference = 'Stop'
@@ -20,21 +21,26 @@ if ($listeners | Where-Object { $_.Port -eq $Port }) {
     if ($isClassroom) {
         Write-Host "UNETI Smart Classroom da chay: $appUrl" -ForegroundColor Green
         Write-Host 'Mo dia chi tren trong trinh duyet. Khong can chay them server.'
-        Write-Host 'Neu can build va chay ban moi rieng: .\start.ps1 -Port 8001'
+        Write-Host 'Neu can chay rieng tren cong khac: .\start.ps1 -Port 8001'
         return
     }
     throw "Cong $Port dang duoc ung dung khac su dung. Thu: .\start.ps1 -Port 8001"
 }
 
-Push-Location (Join-Path $projectRoot 'frontend')
-try {
-    if (-not (Test-Path -LiteralPath 'node_modules')) {
-        npm ci --no-fund --no-audit
-        if ($LASTEXITCODE -ne 0) { throw 'Khong cai duoc frontend dependencies.' }
-    }
-    npm run build
-    if ($LASTEXITCODE -ne 0) { throw 'Frontend build that bai.' }
-} finally { Pop-Location }
+$frontendEntry = Join-Path $projectRoot 'frontend/dist/index.html'
+if ($Rebuild -or -not (Test-Path -LiteralPath $frontendEntry)) {
+    Push-Location (Join-Path $projectRoot 'frontend')
+    try {
+        if (-not (Test-Path -LiteralPath 'node_modules')) {
+            npm ci --include=dev --no-fund --no-audit
+            if ($LASTEXITCODE -ne 0) { throw 'Khong cai duoc frontend dependencies.' }
+        }
+        npm run build
+        if ($LASTEXITCODE -ne 0) { throw 'Frontend build that bai.' }
+    } finally { Pop-Location }
+} else {
+    Write-Host 'Su dung giao dien da build san; khong can npm hoac ket noi mang.' -ForegroundColor Green
+}
 Push-Location $projectRoot
 try {
     Write-Host "UNETI Smart Classroom: $appUrl" -ForegroundColor Green

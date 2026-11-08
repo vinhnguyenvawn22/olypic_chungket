@@ -1,0 +1,131 @@
+{
+  "team_code": "UNETI15",
+  "team_name": "Người Hà Tây Chất",
+  "problem": "AI04",
+  "members": [
+    "Nguyễn Thị Hải Yến",
+    "Doãn Hoài Nam",
+    "Nguyễn Văn Vinh"
+  ],
+  "train": {
+    "file": "data/AI04/datatraining.txt",
+    "rows": 8143,
+    "sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56"
+  },
+  "validation": {
+    "file": "data/AI04/datatest.txt",
+    "rows": 2665,
+    "occupied": 972,
+    "empty": 1693,
+    "sha256": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f",
+    "status": "Development validation previously examined"
+  },
+  "default_demo_mode": "or2",
+  "ratio_unit": "Ratios stored in [0,1]; multiply by100 to display percent.",
+  "results": [
+    {
+      "model": "btc",
+      "name": "Baseline BTC",
+      "policy": "three",
+      "macro_f1": 0.9755465933929396,
+      "false_empty_rate": 0.0072016460905349,
+      "recall_occupied": 0.992798353909465,
+      "tn": 1639,
+      "fp": 54,
+      "fn": 7,
+      "tp": 965,
+      "unsafe_recommendation_samples": 1,
+      "correct_recommendation_samples": 1633,
+      "empty_sample_coverage": 0.9645599527466036,
+      "detected_empty_episodes": 3,
+      "empty_episodes": 13
+    },
+    {
+      "model": "goc",
+      "name": "Logistic đa thức của nhóm",
+      "policy": "three",
+      "macro_f1": 0.9771777378038254,
+      "false_empty_rate": 0.0020576131687242,
+      "recall_occupied": 0.9979423868312757,
+      "tn": 1638,
+      "fp": 55,
+      "fn": 2,
+      "tp": 970,
+      "unsafe_recommendation_samples": 1,
+      "correct_recommendation_samples": 1631,
+      "empty_sample_coverage": 0.9633786178381571,
+      "detected_empty_episodes": 3,
+      "empty_episodes": 13
+    },
+    {
+      "model": "or2",
+      "name": "Hai Logistic và bộ chặn ánh sáng",
+      "policy": "delta",
+      "macro_f1": 0.977582624641448,
+      "false_empty_rate": 0.0010288065843621,
+      "recall_occupied": 0.9989711934156379,
+      "tn": 1638,
+      "fp": 55,
+      "fn": 1,
+      "tp": 971,
+      "unsafe_recommendation_samples": 0,
+      "correct_recommendation_samples": 1631,
+      "empty_sample_coverage": 0.9633786178381571,
+      "detected_empty_episodes": 3,
+      "empty_episodes": 13
+    },
+    {
+      "model": "ort",
+      "name": "OR tín hiệu quá khứ và bộ chặn",
+      "policy": "delta",
+      "macro_f1": 0.9779873425154486,
+      "false_empty_rate": 0.0,
+      "recall_occupied": 1.0,
+      "tn": 1638,
+      "fp": 55,
+      "fn": 0,
+      "tp": 972,
+      "unsafe_recommendation_samples": 0,
+      "correct_recommendation_samples": 1624,
+      "empty_sample_coverage": 0.9592439456585942,
+      "detected_empty_episodes": 3,
+      "empty_episodes": 13
+    }
+  ],
+  "notes": [
+    "Source data come from one UCI office room.",
+    "Recommendation is a simulated suggestion to inspect; no electricity consumption was measured.",
+    "New results and slides were prepared after the stated submission deadline; the exam restricts changes to core content after that deadline."
+  ],
+  "selection_document": "PHUONG_PHAP_MO_HINH.md",
+  "initial_logistic_selection": {
+    "candidates": 16,
+    "selected": {
+      "polynomial_degree": 2,
+      "C": 0.3,
+      "class_weight": "balanced"
+    },
+    "ranking": [
+      "temporal_f1 descending",
+      "temporal_fer ascending",
+      "grouped_f1 descending"
+    ],
+    "constraints": [
+      "grouped F1>=BTC",
+      "grouped FER<=BTC",
+      "chronological F1>=BTC",
+      "chronological FER<=BTC"
+    ],
+    "chronological_held_samples": 3454
+  },
+  "expanded_selector": {
+    "model": "temporal",
+    "threshold": 0.65,
+    "lock": "results/cai_tien/selection_locked.json"
+  },
+  "demo_choice": {
+    "mode": "or2",
+    "basis": "Observed development evidence with human review",
+    "record": "research/deployment_choice.json"
+  }
+}

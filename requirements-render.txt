@@ -1,8 +1,0 @@
-# Runtime dependencies for the hosted demo; model versions match local results.
-fastapi==0.116.1
-uvicorn[standard]==0.35.0
-python-multipart==0.0.28
-scikit-learn==1.6.1
-joblib==1.4.2
-pandas==2.2.3
-numpy==1.26.4

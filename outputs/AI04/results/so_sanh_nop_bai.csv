@@ -1,0 +1,5 @@
+﻿model,name,policy,macro_f1,false_empty_rate,recall_occupied,tn,fp,fn,tp,unsafe_recommendation_samples,correct_recommendation_samples,empty_sample_coverage,detected_empty_episodes,empty_episodes
+btc,Baseline BTC,three,0.9755465933929396,0.0072016460905349,0.992798353909465,1639,54,7,965,1,1633,0.9645599527466036,3,13
+goc,Logistic đa thức của nhóm,three,0.9771777378038254,0.0020576131687242,0.9979423868312757,1638,55,2,970,1,1631,0.9633786178381571,3,13
+or2,Hai Logistic và bộ chặn ánh sáng,delta,0.977582624641448,0.0010288065843621,0.9989711934156379,1638,55,1,971,0,1631,0.9633786178381571,3,13
+ort,OR tín hiệu quá khứ và bộ chặn,delta,0.9779873425154486,0.0,1.0,1638,55,0,972,0,1624,0.9592439456585942,3,13

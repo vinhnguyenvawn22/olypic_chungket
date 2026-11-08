@@ -1,0 +1,22 @@
+{
+  "model": "temporal",
+  "threshold": 0.65,
+  "fallback": false,
+  "action": {
+    "policy": "three",
+    "fallback": false
+  },
+  "original_action": {
+    "policy": "delta",
+    "fallback": false
+  },
+  "train_sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+  "protocol_sha256": "3293da5965854b5742d884945c3d44d39e6d89e4eb3d4b313cc34943f1290534",
+  "source_sha256": "bf0d8269845512863a1dc4d1928f768eaaa66a002dc7300a428dd3aafc1d7b12",
+  "guard": {
+    "delta_lux": 165.87500000000045,
+    "positive_empty_steps": 471,
+    "dark_lux": 31.0
+  },
+  "validation_history": "previously inspected development set"
+}
