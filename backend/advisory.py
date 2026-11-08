@@ -14,14 +14,20 @@ def local(value: datetime) -> datetime:
     return value.replace(tzinfo=LOCAL_TZ) if value.tzinfo is None else value.astimezone(LOCAL_TZ)
 
 
-def advance(probability: float, current: datetime, count: int, previous: datetime | None):
+def advance(probability: float, current: datetime, count: int, previous: datetime | None,
+            *, threshold: float = THRESHOLD, max_gap: float | None = MAX_GAP_SECONDS):
+    """Advance the streak; research callers may override the threshold and gap.
+
+    The web application keeps the defaults. A None gap preserves the original
+    baseline rule, which counts samples without checking their time interval.
+    """
     reason = None
-    if previous is not None:
+    if previous is not None and max_gap is not None:
         gap = (local(current) - local(previous)).total_seconds()
-        if gap <= 0 or gap > MAX_GAP_SECONDS:
+        if gap <= 0 or gap > max_gap:
             count = 0
-            reason = 'Thời gian không tăng' if gap <= 0 else 'Gián đoạn quá 120 giây'
-    count = count + 1 if probability < THRESHOLD else 0
+            reason = 'Thời gian không tăng' if gap <= 0 else f'Gián đoạn quá {max_gap:g} giây'
+    count = count + 1 if probability < threshold else 0
     return count, count >= MIN_SAMPLES, reason
 
 

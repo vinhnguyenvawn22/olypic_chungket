@@ -14,7 +14,7 @@ Mở PowerShell tại thư mục gốc dự án:
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-.\start.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\start.ps1
 ```
 
 Mở **http://127.0.0.1:8000**. Script tự cài thư viện frontend nếu cần, build giao diện và chạy server. Dừng bằng **Ctrl+C**. Những lần sau chỉ cần kích hoạt `.venv` và chạy `.\start.ps1`.
