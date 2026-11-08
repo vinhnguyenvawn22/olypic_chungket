@@ -19,6 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 from sklearn.exceptions import InconsistentVersionWarning
 from backend.advisory import Evidence, StatusRequest, advance, make_advisory, status as advisory_status, MIN_SAMPLES
+from backend.bundle_runtime import BundleRuntime, HISTORY_SIZE
 
 ROOT = Path(__file__).resolve().parents[1]
 # Windows may register .js as text/plain. Browsers reject ES modules with that MIME.
@@ -32,7 +33,7 @@ MAX_BYTES = 8 * 1024 * 1024
 MAX_ROWS = 12000
 ModelId = Literal['uneti15', 'btc']
 SPECS = {
-    'uneti15': ('UNETI15 · Logistic Regression cải tiến', ROOT / 'model/logistic_optimized.joblib'),
+    'uneti15': ('UNETI15 · Logistic theo chuỗi', ROOT / 'model/improvement_bundle.joblib'),
     'btc': ('BTC · Baseline', ROOT / 'outputs/AI04/model.joblib'),
 }
 registry: dict[str, dict] = {}
@@ -46,13 +47,20 @@ async def lifespan(app):
         try:
             with warnings.catch_warnings():
                 warnings.simplefilter('error', InconsistentVersionWarning)
-                model = joblib.load(path)
-            if list(model.feature_names_in_) != FEATURES:
-                raise ValueError('Thứ tự đặc trưng không tương thích.')
-            if set(model.classes_) != {0, 1}:
-                raise ValueError('Mô hình không có đúng hai lớp 0 và 1.')
-            params=model.get_params()
-            item.update(available=True, model=model, occupied_index=list(model.classes_).index(1), parameters={k:v for k,v in params.items() if k.endswith('__degree') or k.endswith('__C') or k.endswith('__class_weight')})
+                model = BundleRuntime(path) if model_id == 'uneti15' else joblib.load(path)
+            if model_id == 'uneti15':
+                item.update(available=True, model=model, kind='bundle',
+                            classification_threshold=model.classification_threshold,
+                            parameters=model.parameters)
+            else:
+                if list(model.feature_names_in_) != FEATURES:
+                    raise ValueError('Thứ tự đặc trưng không tương thích.')
+                if set(model.classes_) != {0, 1}:
+                    raise ValueError('Mô hình không có đúng hai lớp 0 và 1.')
+                params=model.get_params()
+                item.update(available=True, model=model, kind='pipeline', classification_threshold=.5,
+                            occupied_index=list(model.classes_).index(1),
+                            parameters={'classification_threshold': .5, **{k:v for k,v in params.items() if k.endswith('__degree') or k.endswith('__C') or k.endswith('__class_weight')}})
         except Exception as exc:
             item['error'] = f'Không nạp được mô hình: {exc}'
         registry[model_id] = item
@@ -104,12 +112,17 @@ class Sensors(BaseModel):
         return value
 
 
+class HistorySample(Sensors):
+    date: datetime
+
+
 class Context(BaseModel):
     count: int = Field(default=0, ge=0, le=1000000)
     last_timestamp: datetime | None = None
     evidence: list[Evidence] = Field(default_factory=list, max_length=MIN_SAMPLES)
     streak_started_at: datetime | None = None
     episode_id: str | None = Field(default=None, max_length=100)
+    history: list[HistorySample] = Field(default_factory=list, max_length=HISTORY_SIZE)
 
 
 class PredictRequest(BaseModel):
@@ -137,6 +150,7 @@ def infer(req: PredictRequest):
             row['error'] = str(exc)
             row['advisory'] = make_advisory(invalid=True)
         rows.append(row)
+    histories = {}
     for mid in ids:
         entry = registry[mid]
         ctx = req.context.get(mid, Context())
@@ -145,7 +159,13 @@ def infer(req: PredictRequest):
         evidence = [{'timestamp': timestamp(e.timestamp).isoformat(), 'probability': e.probability} for e in ctx.evidence]
         started = timestamp(ctx.streak_started_at).isoformat() if ctx.streak_started_at else None
         predictions = {}
-        if valid_values:
+        if entry['kind'] == 'bundle':
+            try:
+                predictions, histories[mid] = entry['model'].predict_rows(
+                    rows, [sample.model_dump(mode='json') for sample in ctx.history])
+            except Exception as exc:
+                raise HTTPException(500, f'Lỗi suy luận {mid}: {exc}')
+        elif valid_values:
             frame = pd.DataFrame(valid_values, columns=FEATURES)
             try:
                 probs = entry['model'].predict_proba(frame)[:, entry['occupied_index']]
@@ -171,7 +191,7 @@ def infer(req: PredictRequest):
                 if count == 1 or episode_id is None:
                     episode_id = f'{mid}:{uuid.uuid4().hex}'
             advisory = make_advisory(count, valid=True, evidence=list(evidence), reset_reason=reset, started_at=started, model_id=mid, episode_id=episode_id)
-            row['results'][mid] = {'model_id': mid, 'label': label, 'probability': prob, 'count': count, 'alert': alert, 'reset_reason': reset, 'evidence': list(evidence), 'streak_started_at': started, 'advisory': advisory}
+            row['results'][mid] = {'model_id': mid, 'label': label, 'probability': prob, 'classification_threshold': entry['classification_threshold'], 'count': count, 'alert': alert, 'reset_reason': reset, 'evidence': list(evidence), 'streak_started_at': started, 'advisory': advisory}
             if mid == req.model_id:
                 row['advisory'] = advisory
             previous = current
@@ -179,6 +199,8 @@ def infer(req: PredictRequest):
     for mid in ids:
         final = rows[-1]
         contexts[mid] = {'count': final['results'][mid]['count'], 'last_timestamp': final['timestamp'], 'evidence': final['results'][mid]['evidence'], 'streak_started_at': final['results'][mid]['streak_started_at'], 'episode_id': final['results'][mid]['advisory']['episode_id']} if not final['error'] else {'count': 0, 'last_timestamp': None}
+        if registry[mid]['kind'] == 'bundle':
+            contexts[mid]['history'] = histories[mid]
     return {'model_id': req.model_id, 'rows': rows, 'context': contexts, 'invalid_rows': sum(bool(r['error']) for r in rows)}
 
 
@@ -197,7 +219,12 @@ def models():
     result = []
     for mid, entry in registry.items():
         info = {k: v for k, v in entry.items() if k not in ('model', 'occupied_index')}
-        metric_path = ROOT / ('model/logistic_optimized_metadata.json' if mid == 'uneti15' else 'outputs/AI04/metrics.json')
+        # Historical optimized-Logistic CV scores do not describe the new bundle.
+        if mid == 'uneti15':
+            info['evaluation'] = None
+            result.append(info)
+            continue
+        metric_path = ROOT / 'outputs/AI04/metrics.json'
         try:
             info['evaluation'] = json.loads(metric_path.read_text(encoding='utf-8'))
         except (OSError, ValueError):

@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 import numpy as np
 import pandas as pd
 import pytest
+import joblib
 from fastapi.testclient import TestClient
 
 from backend.main import FEATURES, ROOT, advance, app, registry
@@ -60,8 +61,14 @@ def test_api_matches_saved_pipeline(client, samples, model_id):
     response = client.post('/api/predict-batch', json={'model_id': model_id, 'samples': samples})
     assert response.status_code == 200
     result = response.json()
-    model = registry[model_id]['model']
-    expected = model.predict_proba(pd.DataFrame(samples)[FEATURES])[:, list(model.classes_).index(1)]
+    if model_id == 'uneti15':
+        bundle = joblib.load(ROOT / 'model/improvement_bundle.joblib')
+        frame = pd.DataFrame(samples)
+        frame['date'] = pd.to_datetime(frame['date'])
+        expected = bundle['models'][bundle['lock']['model']].score(frame)
+    else:
+        model = registry[model_id]['model']
+        expected = model.predict_proba(pd.DataFrame(samples)[FEATURES])[:, list(model.classes_).index(1)]
     actual = [row['results'][model_id]['probability'] for row in result['rows']]
     np.testing.assert_allclose(actual, expected, rtol=1e-12)
 
