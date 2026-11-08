@@ -1,0 +1,14 @@
+{
+  "status": "Nghiên cứu bổ sung sau khi đã xem validation. Sự tồn tại của lỗi 07:36 và quy tắc Light guard đã được biết trong các lượt trước. Kết quả trên datatest mang tính phát triển.",
+  "data": "Huấn luyện và chọn mọi giá trị bằng datatraining.txt. Không thêm dữ liệu bên ngoài, không dùng datatest2, ID hoặc lịch làm biến dự đoán.",
+  "classifiers": ["BTC LR raw5", "UNETI15 poly2 C0.3 balanced", "LR Light+CO2 C1 weight4", "LDA Light+CO2", "QDA Light+CO2 reg0.1", "SVM RBF Light+CO2 C3", "RandomForest raw5 depth8 leaf5 120trees", "ExtraTrees raw5 depth8 leaf5 120trees", "HGB raw5 7leaves l2=5 150iterations", "HGB Light+CO2 7leaves l2=5 150iterations", "HGB Light+CO2 monotone 7leaves l2=5 150iterations", "LR temporal Light+CO2+changes+CO2 slopes C1 weight4 and episode weights", "OR UNETI15 + LR LightCO2", "OR UNETI15 + LR temporal"],
+  "classification_thresholds": [0.35, 0.5, 0.65, 0.8],
+  "historical_thresholds": {"lr2":0.7,"temporal":0.625,"OR":0.5},
+  "selection": "Ưu tiên các ứng viên có FER<=1% và FPR<=8% trong cả grouped và forward. Xếp theo min Macro-F1 hai phép chia, rồi trung bình Macro-F1, số mô hình thành phần, thứ tự khai báo, ngưỡng. Nếu không đạt lọc thì tối thiểu trung bình (5FN+FP)/n, sau đó cùng quy tắc. Đây là giả định thiết kế.",
+  "splits": "3 SGKF khối 2 giờ, seed2026, purge 10 phút sát mọi mẫu giữ lại để tránh bộ nhớ 10 mẫu đi qua biên. Forward theo ngày, học trước đầu ngày ít nhất 2 giờ, giữ cả ngày toàn trống. Inner selection lặp trong mỗi outer day khi đủ điều kiện, nếu thiếu forward evidence thì dùng cấu hình UNETI15 cố định.",
+  "policy": "So sánh giữ p<0.2 trong 3 mẫu, gap120; tăng 5 và 10 mẫu; learned light delta guard; guard cộng cooldown3; guard mức sáng tuyệt đối. Delta guard học phân vị99 của mức tăng Light dương ở hai mẫu train đều trống và liên tiếp 0<dt<=120 giây. Veto và reset bộ đếm khi tăng Light vượt ngưỡng. Mức sáng guard tuyệt đối là Light nhỏ nhất ở lớp có người trong train. Không được điều chỉnh các quy tắc này sau khi xem datatest.",
+  "policy_selection": "Giữ các chính sách có coverage mẫu trống >=90% ở cả hai phép chia. Ưu tiên min max tỉ lệ khuyến nghị sai, rồi max min coverage, rồi ít thay đổi trạng thái hơn, rồi thứ tự khai báo. Nếu không đạt coverage thì dùng delta guard như phương án cơ chế có báo cáo fallback.",
+  "validation": "Đánh giá tất cả phương án dưới dạng phân tích phát triển có công khai, chỉ triển khai mặc định theo lock train. Ghi riêng champion mô hình và UNETI15+guard để đánh giá lớp hành động. Không tìm ngưỡng từ validation.",
+  "seed":2026,
+  "sources": ["https://scikit-learn.org/1.6/modules/ensemble.html","https://scikit-learn.org/1.6/modules/cross_validation.html","https://archive.ics.uci.edu/dataset/357/occupancy+detection","Các thí nghiệm AI04 trước của người dùng về OR temporal và Light guard"]
+}

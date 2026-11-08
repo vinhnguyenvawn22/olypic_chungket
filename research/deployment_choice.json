@@ -1,0 +1,15 @@
+{
+  "default_mode": "or2",
+  "status": "Lựa chọn thực hành từ bằng chứng phát triển đã được quan sát, cần kiểm chứng ở phòng mới.",
+  "rationale": "Hai Logistic cố định bổ sung tín hiệu cho nhau, giảm FN từ2 xuống1 với FP55; delta guard giảm unsafe1 xuống0 và giữ1631 khuyến nghị đúng trên validation. Grouped và forward OOF của OR2+delta đều có0 unsafe, coverage trên90%.",
+  "contrast": {
+    "train_macro_f1_selector": "temporal threshold0.65",
+    "validation_model_fn": 4,
+    "validation_unsafe": 0,
+    "temporal_or_mode": "ort",
+    "temporal_or_validation_fn": 0,
+    "temporal_or_correct_recommendations": 1624
+  },
+  "history": "OR, Light guard và lỗi07:36 đã được xem trong các lượt nghiên cứu trước. Đây không phải kết quả test độc lập.",
+  "reference": "selection_locked.json giữ riêng kết quả thuật toán chọn theo min Macro-F1. Quyết định demo không thay đổi giá trị lock đó."
+}
